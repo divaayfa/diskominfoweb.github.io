@@ -1,0 +1,275 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background: #fef6f6;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 100vh;
+}
+
+.form-section {
+  flex: 1;
+  min-width: 320px;
+  padding: 60px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.form-wrapper {
+  width: 100%;
+  max-width: 400px;
+  animation: fadeIn 0.4s ease-in;
+}
+
+h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+p {
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #444;
+}
+
+.switch-link {
+  color: #0047ff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.switch-link:hover {
+  color: #002fa7;
+  text-decoration: underline;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+input[type="email"]:hover,
+input[type="password"]:hover,
+input[type="text"]:hover {
+  border-color: #888;
+}
+
+input:focus {
+  border-color: #0047ff;
+  box-shadow: 0 0 0 3px rgba(0, 71, 255, 0.1);
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.checkbox-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.checkbox-row a {
+  color: #888;
+  text-decoration: none;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #0026c7;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background-color: #001ea5;
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.social-icons {
+  text-align: center;
+  margin-top: 20px;
+  color: #555;
+}
+
+.icons i {
+  font-size: 22px;
+  margin: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.icons i:hover {
+  transform: scale(1.2);
+}
+
+.icons i.fa-facebook {
+  color: #1877f2; 
+}
+
+.icons i.fa-apple {
+  color: #000;
+}
+
+.icons i.fa-google {
+  color: #ea4335; 
+}
+
+
+.image-section {
+  position: relative;
+  flex: 1;
+  min-width: 400px;
+  background-color: #0e1a44; 
+  background-size: cover;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  overflow: hidden;
+}
+
+.batik-overlay {
+  position: absolute;
+  bottom: 5px;
+  left: 10px;
+  z-index: 0;
+  opacity: 0.15;
+  width: 320px; 
+}
+
+
+.batik-overlay img {
+  width: 100%;
+  height: auto;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media screen and (min-width: 900px) {
+  .image-section {
+    display: flex;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoomFade {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.image-section img {
+  max-height: 90vh;
+  border-radius: 30px;
+  animation: zoomFade 0.25s ease-out;
+}
+
+@keyframes slideFade {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-wrapper.animate-transition {
+  animation: slideFade 0.4s ease;
+}
+
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+}
+
+.logo img {
+  height: 40px;
+  width: auto;
+  margin-right: 10px;
+  opacity: 0.95;
+  transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+.logo-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #00206b;
+  line-height: 1.2;
+  max-width: 250px;
+}
+
+

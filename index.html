@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Diskominfo Auth UI</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="container">
+    <div class="form-section">
+      <div class="form-wrapper">
+        <h2 id="form-title">Sign in</h2>
+        <p id="toggle-text">
+          If you don’t have an account register <br />
+          You can <span class="switch-link" onclick="toggleForm()">Register here !</span>
+        </p>
+
+        <form id="auth-form">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="Enter your email address" required />
+          </div>
+
+          <div class="form-group hidden" id="username-group">
+            <label>Username</label>
+            <input type="text" placeholder="Enter your username" />
+          </div>
+
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" placeholder="Enter your password" required />
+          </div>
+
+          <div class="form-group hidden" id="confirm-group">
+            <label>Confirm Password</label>
+            <input type="password" placeholder="Confirm your password" />
+          </div>
+
+          <div class="checkbox-row" id="remember-row">
+            <label><input type="checkbox" /> Remember me</label>
+            <a href="#">Forgot Password?</a>
+          </div>
+
+          <button type="submit" id="submit-btn">Login</button>
+
+          <div class="social-icons" id="social-row">
+            <p>or continue with</p>
+            <div class="icons">
+              <i class="fab fa-facebook"></i>
+              <i class="fab fa-apple"></i>
+              <i class="fab fa-google"></i>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+<body>
+  <div class="logo">
+    <img src="images/logo.jpeg" alt="Logo Diskominfo" />
+  </div>
+
+  <div class="image-section">
+    <img src="images/wayang.png" alt="Wayang Image" />
+  </div>
+</body>
+
+<div class="logo">
+  <img src="images/logo.jpeg" alt="Logo Diskominfo" />
+  <span class="logo-text">
+    Dinas Komunikasi Informatika dan Statistik Ponorogo<br />
+  </span>
+</div>
+
+<div class="batik-overlay">
+  <img src="images/batik.png" alt="Batik Ornament" />
+</div>
+
+  <script>
+    let isSignUp = false;
+
+    function toggleForm() {
+      isSignUp = !isSignUp;
+
+      const formWrapper = document.querySelector('.form-wrapper');
+      formWrapper.classList.remove('animate-transition'); // reset
+      void formWrapper.offsetWidth; // force reflow
+      formWrapper.classList.add('animate-transition');
+
+      document.getElementById('form-title').innerText = isSignUp ? 'Sign up' : 'Sign in';
+      document.getElementById('submit-btn').innerText = isSignUp ? 'Register' : 'Login';
+      document.getElementById('username-group').classList.toggle('hidden', !isSignUp);
+      document.getElementById('confirm-group').classList.toggle('hidden', !isSignUp);
+      document.getElementById('remember-row').classList.toggle('hidden', isSignUp);
+      document.getElementById('social-row').classList.toggle('hidden', isSignUp);
+
+      document.getElementById('toggle-text').innerHTML = isSignUp
+        ? 'If you already have an account register <br /> You can <span class="switch-link" onclick="toggleForm()">Login here !</span>'
+        : 'If you don’t have an account register <br /> You can <span class="switch-link" onclick="toggleForm()">Register here !</span>';
+    }
+
+    // Show/hide password toggle
+    const passwordFields = document.querySelectorAll('input[type="password"]');
+    passwordFields.forEach(field => {
+      const toggleIcon = document.createElement('span');
+      toggleIcon.innerHTML = '<i class="fa fa-eye-slash" style="margin-left:10px; cursor:pointer;"></i>';
+      toggleIcon.onclick = () => {
+        const isHidden = field.type === 'password';
+        field.type = isHidden ? 'text' : 'password';
+        toggleIcon.innerHTML = isHidden
+          ? '<i class="fa fa-eye" style="margin-left:10px; cursor:pointer;"></i>'
+          : '<i class="fa fa-eye-slash" style="margin-left:10px; cursor:pointer;"></i>';
+      };
+      field.parentNode.appendChild(toggleIcon);
+    });
+
+    // Simple form validation
+    const form = document.getElementById('auth-form');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const email = form.querySelector('input[type="email"]');
+      const pass = form.querySelector('input[type="password"]');
+      const confirm = document.querySelector('#confirm-group input');
+      const username = document.querySelector('#username-group input');
+
+      if (!email.value || !pass.value || (isSignUp && (!username.value || !confirm.value))) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      if (isSignUp && pass.value !== confirm.value) {
+        alert('Passwords do not match!');
+        return;
+      }
+
+      alert(isSignUp ? 'Registered successfully!' : 'Logged in successfully!');
+      form.reset();
+      if (isSignUp) toggleForm();
+    });
+  </script>
+</body>
+</html>
