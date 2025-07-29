@@ -117,29 +117,33 @@
       field.parentNode.appendChild(toggleIcon);
     });
 
-    // Simple form validation
-    const form = document.getElementById('auth-form');
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      const email = form.querySelector('input[type="email"]');
-      const pass = form.querySelector('input[type="password"]');
-      const confirm = document.querySelector('#confirm-group input');
-      const username = document.querySelector('#username-group input');
+  // Simple form validation
+  const form = document.getElementById('auth-form');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const email = form.querySelector('input[type="email"]');
+    const pass = form.querySelector('input[type="password"]');
+    const confirm = document.querySelector('#confirm-group input');
+    const username = document.querySelector('#username-group input');
+    
+    if (!email.value || !pass.value || (isSignUp && (!username.value || !confirm.value))) {
+      alert('Please fill in all required fields.');
+      return;
+    }
 
-      if (!email.value || !pass.value || (isSignUp && (!username.value || !confirm.value))) {
-        alert('Please fill in all required fields.');
-        return;
-      }
+  if (isSignUp && pass.value !== confirm.value) {
+    alert('Passwords do not match!');
+    return;
+  }
 
-      if (isSignUp && pass.value !== confirm.value) {
-        alert('Passwords do not match!');
-        return;
-      }
-
-      alert(isSignUp ? 'Registered successfully!' : 'Logged in successfully!');
-      form.reset();
-      if (isSignUp) toggleForm();
-    });
+  if (isSignUp) {
+    alert('Registered successfully!');
+    toggleForm();
+  } else {
+    // LOGIN SUKSES → pindah ke dashboard.html
+    window.location.href = 'dashboard.html';
+  }
+});
   </script>
 </body>
 </html>
