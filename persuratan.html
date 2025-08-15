@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kominfo Dashboard</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+    }
+
+    /* Tombol hamburger */
+    .hamburger {
+        font-size: 28px;
+        cursor: pointer;
+        padding: 10px;
+        color: white;
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 1100;
+        border-radius: 4px;
+        background: none;
+        border: none;
+    }
+
+    /* Sidebar */
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 100%;
+        background-color: #0E1A44;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 20px;
+        color: white;
+        overflow: hidden;
+        transition: width 0.3s ease;
+        z-index: 1000;
+    }
+    #menu-toggle:checked ~ .sidebar {
+        width: 220px;
+    }
+
+    /* Main shift saat menu buka */
+    .main {
+        margin-left: 0;
+        transition: margin-left 0.3s ease;
+    }
+    #menu-toggle:checked ~ .main {
+        margin-left: 220px;
+    }
+
+    /* Menu pertama (Main Menu) center */
+    .sidebar .menu-btn:first-child {
+        justify-content: center;
+    }
+    .sidebar .menu-btn:first-child .menu-label {
+        text-align: center;
+        width: 100%;
+    }
+
+    .menu-btn {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        cursor: pointer;
+        color: white;
+        text-decoration: none;
+        transition: background 0.3s;
+    }
+    .menu-btn:hover {
+        background-color: rgba(255,255,255,0.2);
+    }
+    .menu-btn.active {
+        background-color: rgba(255,255,255,0.3);
+    }
+    .menu-label {
+        font-size: 16px;
+    }
+    .menu-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 10px;
+        flex-shrink: 0;
+    }
+
+    /* Top banner */
+    .top-banner {
+        position: relative;
+        height: 100px;
+        background: url('images/pemandangan.jpg') no-repeat center center;
+        background-size: cover; 
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 19px;
+        color: white;
+    }
+    .datetime {
+        font-size: 14px;
+        padding: 19px 39px;
+        border-radius: 5px;
+    }
+    .logo-kominfo {
+        width: 100px;
+        height: auto;
+    }
+    .signup {
+        font-size: 14px;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        display: flex;
+        text-decoration: none;
+        color: #ffffff;
+        align-items: center;
+    }
+    .signup-icon {
+         width: 20px;   /* gedein biar kelihatan */
+    height: 20px;
+    object-fit: contain; /* supaya proporsional */
+    }
+    
+    /* Background Reog */
+    .reog-bg {
+        position: relative;
+        background: url('images/reogg.jpg') no-repeat center center;
+        background-size: cover;
+        padding: 40px 20px;
+        min-height: 500px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .reog-bg > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Search bar */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.search-wrapper {
+    background-color: #0E1A44;
+    display: flex;
+    align-items: center;
+    border-radius: 30px;
+    padding: 5px 15px;
+    width: 60%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.search-icon {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}
+
+.search-box {
+    background: none;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 16px;
+    width: 100%;
+}
+
+.search-box::placeholder {
+    color: #d9d9d9;
+}
+
+    /* History section */
+    .history-section {
+        padding: 20px 40px;
+        background: transparent;
+        border-radius: 12px;
+        width: 90%;
+    }
+    .history-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #000;
+    }
+    .history-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: rgba(255,255,255,0.4);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .history-table th, .history-table td {
+        padding: 14px 10px;
+        text-align: left;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+        color: #000;
+    }
+    .history-table th {
+        font-weight: bold;
+    }
+    .history-table img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 10px;
+    }
+    .product-cell {
+        display: flex;
+        align-items: center;
+    }
+
+    /* Footer */
+    footer {
+        text-align: center;
+        padding: 20px;
+        background-color: #ffffff;
+        color: rgb(0, 0, 0);
+    }
+
+    /* Animasi fade-in saat load */
+body {
+    animation: fadeIn 0.8s ease-in;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Animasi hover di menu-btn */
+.menu-btn {
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+.menu-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Animasi hover di signup */
+.signup {
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+.signup:hover {
+    transform: scale(1.1);
+    background-color: rgba(255,255,255,0.1);
+}
+
+/* Animasi muncul untuk history table */
+.history-section {
+    animation: slideUp 0.8s ease-in-out;
+}
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+</style>
+</head>
+<body>
+
+<!-- Tombol hamburger -->
+<input type="checkbox" id="menu-toggle" hidden>
+<label for="menu-toggle" class="hamburger">&#9776;</label>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="menu-btn"><span class="menu-label">Main Menu</span></div>
+    <hr style="width:80%;border:0.5px solid white;">
+    
+
+    <!-- Home -->
+    <a href="#" class="menu-btn active">
+        <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
+            <path d="M3 9.5l9-7 9 7V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V9.5z"/>
+        </svg>
+        <span class="menu-label">Home</span>
+    </a>
+
+    <!-- Persuratan -->
+    <a href="#" class="menu-btn">
+        <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <!-- Kertas -->
+            <rect x="4" y="3" width="16" height="18" rx="2" ry="2" fill="none" stroke="white" stroke-width="2"/>
+            <!-- Garis-garis tulisan -->
+            <line x1="7" y1="7" x2="17" y2="7" stroke="white" stroke-width="2"/>
+            <line x1="7" y1="11" x2="17" y2="11" stroke="white" stroke-width="2"/>
+            <line x1="7" y1="15" x2="13" y2="15" stroke="white" stroke-width="2"/>
+        </svg>
+        <span class="menu-label">Persuratan</span>
+    </a>
+
+    <!-- Keuangan -->
+    <a href="#" class="menu-btn">
+        <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <!-- Bentuk uang -->
+            <rect x="3" y="7" width="18" height="10" rx="2" ry="2" fill="none" stroke="white" stroke-width="2"/>
+            <!-- Lingkaran nilai uang -->
+            <circle cx="12" cy="12" r="3" fill="white"/>
+            <!-- Garis dekoratif kiri-kanan -->
+            <line x1="6" y1="12" x2="7" y2="12" stroke="white" stroke-width="2"/>
+            <line x1="17" y1="12" x2="18" y2="12" stroke="white" stroke-width="2"/>
+        </svg>
+        <span class="menu-label">Keuangan</span>
+    </a>
+</div>
+
+<!-- Main -->
+<div class="main">
+    <!-- Top banner -->
+    <div class="top-banner">
+    <div class="datetime" id="datetime"></div>
+    <img src="images/logo-kominfo.png" class="logo-kominfo">
+
+    <a href="index.html" class="signup">
+        <img src="images/logo-signup.png" class="signup-icon" alt="Sign In">
+        Sign in/Sign up
+    </a>
+</div>
+
+
+    <!-- Background Reog -->
+    <div class="reog-bg">
+    <div class="search-container">
+    <div class="search-wrapper">
+        <img src="images/search.png" alt="Search" class="search-icon">
+        <input type="text" class="search-box" placeholder="Search for something">
+    </div>
+</div>
+
+
+        <!-- History -->
+        <div class="history-section">
+            <div class="history-title">Top History</div>
+            <table class="history-table">
+                <tr>
+                    <th>PRODUCT</th>
+                    <th>DATE</th>
+                    <th>DAY</th>
+                    <th>REFUNDS</th>
+                </tr>
+                <tr>
+                    <td class="product-cell"><img src="images/surat1.jpg"><span>Surat izin...!</span></td>
+                    <td>02-02-2024</td>
+                    <td>Senin</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td class="product-cell"><img src="images/surat2.jpg"><span>Data-Data Keuangan daerah...!</span></td>
+                    <td>24-12-2025</td>
+                    <td>Selasa</td>
+                    <td>10</td>
+                </tr>
+                <tr>
+                    <td class="product-cell"><img src="images/surat3.jpg"><span>Surat Pemerintah...!</span></td>
+                    <td>12-12-2023</td>
+                    <td>Rabu</td>
+                    <td>5</td>
+                </tr>
+                <tr>
+                    <td class="product-cell"><img src="images/surat4.jpg"><span>Surat Daerah...!</span></td>
+                    <td>29-07-2025</td>
+                    <td>Kamis</td>
+                    <td>5</td>
+                </tr>
+                <tr>
+                    <td class="product-cell"><img src="images/surat5.jpg"><span>Data-Data keuangan pusat...!</span></td>
+                    <td>30-08-2026</td>
+                    <td>Jumat</td>
+                    <td>121</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Diskominfo © 2025. All rights reserved.</p>
+    </footer>
+</div>
+
+<script>
+    function updateDateTime() {
+        const now = new Date();
+        const options = { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+        document.getElementById("datetime").innerHTML = now.toLocaleDateString('id-ID', options);
+    }
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+</script>
+
+
+</body>
+</html>
+
