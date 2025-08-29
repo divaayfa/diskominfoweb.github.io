@@ -1,15 +1,29 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kominfo Dashboard</title>
 <style>
+    /* Body dan wrapper untuk footer */
     body {
         margin: 0;
         font-family: Arial, sans-serif;
         background-color: #f5f5f5;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
         animation: fadeIn 0.8s ease-in;
+    }
+
+    /* Main mengambil sisa space agar footer tetap di bawah */
+    .main {
+        flex: 1;
+        margin-left: 0;
+        transition: margin-left 0.3s ease;
+    }
+    #menu-toggle:checked ~ .main {
+        margin-left: 220px;
     }
 
     /* Tombol hamburger */
@@ -48,19 +62,12 @@
         width: 220px;
     }
 
+    .sidebar .menu-btn:first-child {
+        justify-content: center;
+    }
     .sidebar .menu-btn:first-child .menu-label {
         text-align: center;
         width: 100%;
-    }
-
-    
-
-    .main {
-        margin-left: 0;
-        transition: margin-left 0.3s ease;
-    }
-    #menu-toggle:checked ~ .main {
-        margin-left: 220px;
     }
 
     .menu-btn {
@@ -75,10 +82,9 @@
     margin-bottom: 8px; /* tambah jarak antar menu */
     border-radius: 8px; /* biar sudut agak lembut */
   }
-
     .menu-btn:hover {
-        background-color: rgba(255,255,255,0.2);
         transform: scale(1.05);
+        background-color: rgba(255,255,255,0.2);
     }
     .menu-btn.active {
         background-color: rgba(255,255,255,0.3);
@@ -134,6 +140,7 @@
         width: 20px;
         height: 20px;
         object-fit: contain;
+        margin-right: 5px;
     }
 
     /* Background Reog */
@@ -193,83 +200,42 @@
         width: 90%;
         animation: slideUp 0.8s ease-in-out;
     }
-
-    .stat-boxes {
-        display: flex;
-        gap: 40px;
-        justify-content: center;
-        margin-bottom: 20px;
-    }
-    .stat-box {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        background: #fff;
-        padding: 20px 40px;
-        border-radius: 8px;
-        box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-    }
-    .stat-icon {
-        width: 40px;
-        height: 40px;
-    }
-
-    .masuk-icon {
-    width: 40px;
-    height: 40px;
-  }
-  
-  .keluar-icon {
-    width: 70px;
-    height: 45px;
-  }
-
-    .stat-number {
+    .history-title {
         font-size: 20px;
         font-weight: bold;
+        margin-bottom: 20px;
+        text-align: center;
         color: #000;
     }
-
-    .create-btn {
-        background:#555;
-        border:none;
-        padding:8px 20px;
-        border-radius:4px;
-        font-weight:bold;
-        cursor:pointer;
-        margin-bottom:15px;
-        color :#fff;
-    }
-
     .history-table {
         width: 100%;
         border-collapse: collapse;
-        background: rgba(255,255,255,0.6);
+        background: rgba(255,255,255,0.4);
         border-radius: 10px;
         overflow: hidden;
     }
     .history-table th, .history-table td {
-        padding: 12px 10px;
-        border: 1px solid white;
-        text-align: center;
-        color: #fff;
+        padding: 14px 10px;
+        text-align: left;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+        color: #000;
+    }
+    .history-table th {
+        font-weight: bold;
+    }
+    .history-table img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 10px;
+    }
+    .product-cell {
+        display: flex;
+        align-items: center;
     }
 
-    .history-table tbody td {
-    color: black;         /* tulisan isi tabel hitam */
-}
-    
-    .history-table thead {
-        background:#0E1A44;
-        color:white;
-    }
-
-    .edit-btn, .delete-btn {
-        border:none;
-        background:transparent;
-        cursor:pointer;
-    }
-
+    /* Footer */
     footer {
         text-align: center;
         padding: 20px;
@@ -277,6 +243,7 @@
         color: rgb(0, 0, 0);
     }
 
+    /* Animasi */
     @keyframes fadeIn {
         from { opacity: 0; }
         to { opacity: 1; }
@@ -298,7 +265,7 @@
   <hr style="width:80%;border:0.5px solid white;">
 
   <!-- Home -->
-  <a href="administrasi.html" class="menu-btn">
+  <a href="#" class="menu-btn active">
     <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
       <path d="M3 9.5l9-7 9 7V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V9.5z"/>
     </svg>
@@ -306,7 +273,7 @@
   </a>
 
   <!-- Persuratan -->
-  <a href="#" class="menu-btn active">
+  <a href="persuratan.html" class="menu-btn">
     <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
       <rect x="4" y="3" width="16" height="18" rx="2" ry="2" fill="none" stroke="white" stroke-width="2"/>
       <line x1="7" y1="7" x2="17" y2="7" stroke="white" stroke-width="2"/>
@@ -327,7 +294,7 @@
     <span class="menu-label">Keuangan</span>
   </a>
 
-  <!-- Tambahan Menu -->
+  <!-- Kepegawaian -->
   <a href="#" class="menu-btn">
     <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
       <circle cx="12" cy="7" r="4" stroke="white" stroke-width="2" fill="none"/>
@@ -336,6 +303,7 @@
     <span class="menu-label">Kepegawaian</span>
   </a>
 
+  <!-- Pernyataan Gratifikasi -->
   <a href="#" class="menu-btn">
     <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
       <rect x="4" y="3" width="16" height="18" rx="2" ry="2" fill="none" stroke="white" stroke-width="2"/>
@@ -344,6 +312,7 @@
     <span class="menu-label">Pernyataan Gratifikasi</span>
   </a>
 
+  <!-- Data Ponorogo -->
   <a href="#" class="menu-btn">
     <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
       <ellipse cx="12" cy="5" rx="8" ry="3" fill="none" stroke="white" stroke-width="2"/>
@@ -376,109 +345,44 @@
 
     <!-- History -->
     <div class="history-section">
-
-      <!-- Kotak surat masuk & keluar -->
-      <div class="stat-boxes">
-        <div class="stat-box" style="border-left:8px solid rgb(0, 146, 237);">
-          <img src="images/surat-masuk.png" class="stat-icon masuk-icon">
-          <div>
-            <div class="stat-number">120</div>
-            <div>Surat Masuk</div>
-          </div>
-        </div>
-        <div class="stat-box" style="border-left:8px solid rgb(0, 146, 237)">
-          <img src="images/surat-keluar.png" class="stat-icon keluar-icon">
-          <div>
-            <div class="stat-number">12</div>
-            <div>Surat Keluar</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tombol Create -->
-      <button class="create-btn">CREATE</button>
-
-      <!-- Tabel Surat -->
-      <table class="history-table" id="suratTable">
-        <thead>
-          <tr>
-            <th>NO</th>
-            <th>NAME</th>
-            <th>NOMOR</th>
-            <th>DATE</th>
-            <th>TO</th>
-            <th>ACTION</th>
-          </tr>
-        </thead>
-        <tbody>
-  <tr>
-    <td>1</td>
-    <td>Surat Izin</td>
-    <td>001/SM/2025</td>
-    <td>01-08-2025</td>
-    <td>Kepala Dinas</td>
-    <td>
-      <button class="edit-btn"><img src="images/edit.png" width="20"></button>
-      <button class="delete-btn"><img src="images/delete.png" width="20"></button>
-    </td>
-  </tr>
-  <tr>
-    <td>2</td>
-    <td>Undangan Rapat</td>
-    <td>002/SM/2025</td>
-    <td>05-08-2025</td>
-    <td>Sekretaris</td>
-    <td>
-      <button class="edit-btn"><img src="images/edit.png" width="20"></button>
-      <button class="delete-btn"><img src="images/delete.png" width="20"></button>
-    </td>
-  </tr>
-  <tr>
-    <td>3</td>
-    <td>Surat Dinas</td>
-    <td>003/SM/2025</td>
-    <td>15-08-2025</td>
-    <td>Bupati</td>
-    <td>
-      <button class="edit-btn"><img src="images/edit.png" width="20"></button>
-      <button class="delete-btn"><img src="images/delete.png" width="20"></button>
-    </td>
-  </tr>
-  <tr>
-    <td>4</td>
-    <td>Surat Edaran</td>
-    <td>004/SM/2025</td>
-    <td>18-08-2025</td>
-    <td>Bagian Umum</td>
-    <td>
-      <button class="edit-btn"><img src="images/edit.png" width="20"></button>
-      <button class="delete-btn"><img src="images/delete.png" width="20"></button>
-    </td>
-  </tr>
-  <tr>
-    <td>5</td>
-    <td>Notulen Rapat</td>
-    <td>005/SM/2025</td>
-    <td>20-08-2025</td>
-    <td>Bagian Protokol</td>
-    <td>
-      <button class="edit-btn"><img src="images/edit.png" width="20"></button>
-      <button class="delete-btn"><img src="images/delete.png" width="20"></button>
-    </td>
-  </tr>
-  <tr>
-    <td>6</td>
-    <td>Memo Dinas</td>
-    <td>008/SM/2025</td>
-    <td>25-08-2025</td>
-    <td>Asisten Daerah</td>
-    <td>
-      <button class="edit-btn"><img src="images/edit.png" width="20"></button>
-      <button class="delete-btn"><img src="images/delete.png" width="20"></button>
-    </td>
-  </tr>
-</tbody>
-
+      <div class="history-title">Top History</div>
+      <table class="history-table">
+        <tr>
+          <th>NAME</th>
+          <th>NOMOR</th>
+          <th>DATE</th>
+          <th>TO</th>
+        </tr>
+        <tr>
+          <td class="product-cell"><img src="images/surat1.jpg"><span>Surat Izin</span></td>
+          <td>001/SM/2025</td>
+          <td>01-08-2025</td>
+          <td>Kepala Dinas</td>
+        </tr>
+        <tr>
+          <td class="product-cell"><img src="images/surat2.jpg"><span>Undangan Rapat</span></td>
+          <td>002/SM/2025</td>
+          <td>05-08-2025</td>
+          <td>Sekretaris</td>
+        </tr>
+        <tr>
+          <td class="product-cell"><img src="images/surat3.jpg"><span>Surat Dinas</span></td>
+          <td>003/SM/2025</td>
+          <td>15-08-2025</td>
+          <td>Bupati</td>
+        </tr>
+        <tr>
+          <td class="product-cell"><img src="images/surat4.jpg"><span>Surat Edaran</span></td>
+          <td>004/SM/2025</td>
+          <td>18-08-2025</td>
+          <td>Bagian Umum</td>
+        </tr>
+        <tr>
+          <td class="product-cell"><img src="images/surat5.jpg"><span>Notulen Rapat</span></td>
+          <td>005/SM/2025</td>
+          <td>20-08-2025</td>
+          <td>Bagian Protokol</td>
+        </tr>
       </table>
     </div>
   </div>
@@ -490,7 +394,6 @@
 </div>
 
 <script>
-  // Update tanggal & jam realtime
   function updateDateTime() {
     const now = new Date();
     const options = { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' };
@@ -498,13 +401,6 @@
   }
   setInterval(updateDateTime, 1000);
   updateDateTime();
-
-  // Hapus baris tabel kalau klik delete
-  document.addEventListener("click", function(e) {
-    if(e.target.closest(".delete-btn")){
-      e.target.closest("tr").remove();
-    }
-  });
 </script>
 </body>
 </html>

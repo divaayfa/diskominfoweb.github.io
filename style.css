@@ -350,13 +350,22 @@ body {
   margin-left: 10px;
 }
 
-.menu-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* otomatis menyesuaikan */
-  gap: 20px;
-  width: 80%;
-  margin: 40px auto;
+.menu-item {
+  background: white;
+  border-radius: 10px;
+  text-align: center;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+
+  min-width: 200px;
+  min-height: 100px;
 }
+
+
 
 .menu-item {
   background: white;
@@ -369,6 +378,14 @@ body {
   text-decoration: none;
   color: inherit;
 }
+
+.menu-grid .menu-item:last-child {
+  grid-column: 1 / -1;   /* ambil satu baris penuh */
+  justify-self: center;  /* posisikan ke tengah */
+  min-width: 370px;
+  min-height: 100px;       /* samakan tinggi juga */
+}
+
 
 .menu-item img {
   height: 40px;
@@ -414,6 +431,7 @@ body {
 
 .social-icons {
   margin-bottom: 10px;
+
 }
 
 .social-icons i {
